@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .input-file {
+      margin-bottom: 20px;
+    }
+
+    .btn-convert {
+      padding: 12px 24px;
+      font-size: 18px;
+      text-transform: uppercase;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+    }
+
+    .error-message {
+      color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Image File Converter</h1>
+    <input type="file" class="input-file" accept="image/*">
+    <button class="btn-convert">Convert</button>
+    <div class="result"></div>
+  </div>
+
+  <script>
+    const inputFile = document.querySelector('.input-file');
+    const convertBtn = document.querySelector('.btn-convert');
+    const resultDiv = document.querySelector('.result');
+
+    convertBtn.addEventListener('click', () => {
+      const file = inputFile.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const convertedImage = document.createElement('img');
+          convertedImage.src = e.target.result;
+          resultDiv.innerHTML = '';
+          resultDiv.appendChild(convertedImage);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        resultDiv.innerHTML = '<p class="error-message">Please select an image file.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
